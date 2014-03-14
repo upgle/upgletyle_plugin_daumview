@@ -1,0 +1,6 @@
+<table name="upgletyle_plugin_daumview">
+  <column name="document_srl" type="number" size="11" notnull="notnull" primary_key="primary_key" />
+  <column name="daumview_id" type="number" size="12" notnull="notnull" index="idx_daumview_id" />
+  <column name="category_id" type="varchar" size="6" notnull="notnull" index="idx_category_id" />
+  <column name="status" type="varchar" size="20" default="NOT_PUBLISHED" />
+</table>

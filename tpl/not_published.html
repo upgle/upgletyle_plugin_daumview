@@ -1,0 +1,15 @@
+<div class="panel panel-default">
+	<div class="panel-heading clearfix">
+		<strong class="pull-left">메타 블로그</strong>
+		<button type="button" onclick="doSyncDaumview({$document_srl});return false;" class="bts_btn bts_btn-default bts_btn-xs pull-right"><span class="glyphicon glyphicon-refresh"></span> 동기화</button>
+	</div>
+	<!-- 송고되지 않았을 경우 -->
+	<div class="panel-body">
+		<label for="daumview_category">다음 VIEW 송고</label>
+		<select name="plugin_daumview" id="plugin_daumview" class="form-control input-sm">
+			<option value=''>송고하지않음</option>
+			<option loop="$daumview_categories => $key, $val" value='{$val['id']}' selected="selected"|cond="$daumview_info->category_id == $val['id']">{$val['full_name']}</option>
+		</select>
+		<span class="help-block">카테고리를 선택하시면 발행과 함께 글을 송고합니다.</span>
+	</div>
+</div>

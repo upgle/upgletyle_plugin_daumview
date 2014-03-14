@@ -7,7 +7,11 @@
     class upgletyle_plugin_daumview extends ModuleObject {
 
         var $add_triggers = array(
-            array('upgletyle.ToolPostManageWrite', 'upgletyle_plugin_daumview', 'controller', 'triggerToolPostManageWrite', 'metabox')
+            array('upgletyle.ToolPostManageWrite', 'upgletyle_plugin_daumview', 'controller', 'triggerToolPostManageWrite', 'metabox'),
+
+			array('upgletyle.publishObject.publish', 'upgletyle_plugin_daumview', 'controller', 'triggerPublishObjectPublish', 'before'),
+
+			array('upgletyle.procUpgletylePostsave', 'upgletyle_plugin_daumview', 'controller', 'triggerProcUpgletylePostsave', 'before'),
         );
 
         /**
@@ -19,7 +23,6 @@
             foreach($this->add_triggers as $trigger) {
                 $oModuleController->insertTrigger($trigger[0], $trigger[1], $trigger[2], $trigger[3], $trigger[4]);
             }
-
         }
 
         /**
@@ -32,7 +35,6 @@
             foreach($this->add_triggers as $trigger) {
                 if(!$oModuleModel->getTrigger($trigger[0], $trigger[1], $trigger[2], $trigger[3], $trigger[4])) return true;
             }
-
             return false;
         }
 

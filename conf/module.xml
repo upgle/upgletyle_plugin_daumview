@@ -4,5 +4,7 @@
     <permissions />
     <actions>
         <action name="triggerToolPostManageWrite" type="controller" />
+        <action name="triggerPublishObjectPublish" type="controller" />
+        <action name="triggerProcUpgletylePostsave" type="controller" />
     </actions>
 </module>
