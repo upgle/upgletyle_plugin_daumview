@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module version="0.2">
+    <title xml:lang="ko">다음뷰 플러그인</title>
+    <description xml:lang="ko">다음뷰에 글을 송고할 수 있도록 합니다.</description>
+    <version>1.0</version>
+    <date>2014-03-14</date>
+
+    <author email_address="developers@xpressengine.com" link="http://xpressengine.com/">
+        <name xml:lang="ko">NAVER</name>
+    </author>
+</module>
