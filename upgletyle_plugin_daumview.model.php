@@ -28,21 +28,19 @@
 		function getUserinfo($use_cache = true) {
 
 			$user_info = false;
+			$site_module_info = Context::get('site_module_info');
 
 			$oCacheHandler = CacheHandler::getInstance('object', null, true);
 			if($oCacheHandler->isSupport())
 			{
-
-				//$object_key = 'member_groups:' . getNumberingPath($member_srl) . $member_srl . '_'.$site_srl;
-				$object_key = 'user_info';
+				$object_key = 'user_info:' . $site_module_info->module_srl;
 				$cache_key = $oCacheHandler->getGroupKey('upgletyle_plugin_daumview', $object_key);
-				$user_info = $oCacheHandler->get($cache_key);
+				if($use_cache) $user_info = $oCacheHandler->get($cache_key);
 			}
-
 			if($user_info === false || !$use_cache)
 			{
-				$url = "http://blog.upgle.com";
-				$site_ping = "http://api.v.daum.net/open/user_info.xml?blogurl=".$url;
+				$site_url = getFullSiteUrl($site_module_info->domain);
+				$site_ping = "http://api.v.daum.net/open/user_info.xml?blogurl=".$site_url;
 				$xml = FileHandler::getRemoteResource($site_ping, null, 3, 'GET', 'application/xml');
 				if(!$xml) return new Object(-1, 'msg_ping_test_error');
 
@@ -75,10 +73,20 @@
 			return $user_info;
 		}
 
+
         /**
          * @brief Get a Daumview categories from remote server
          **/
-		function getDaumviewCategories() {
+		function getTrackbackUrlByCategory($category_id) {
+			$categories = $this->getDaumviewCategories();
+			return $categories[$category_id]['trackback_url'];
+		}
+
+
+        /**
+         * @brief Get a Daumview categories from remote server
+         **/
+		function getDaumviewCategories($use_cache = true) {
 
 			$daumview_categories = false;
 
@@ -87,7 +95,7 @@
 			{
 				$object_key = 'daumview_categories';
 				$cache_key = $oCacheHandler->getGroupKey('upgletyle_plugin_daumview', $object_key);
-				$daumview_categories = $oCacheHandler->get($cache_key);
+				if($use_cache) $daumview_categories = $oCacheHandler->get($cache_key);
 			}
 
 			if($daumview_categories === false)
@@ -104,7 +112,7 @@
 				$daumview_categories = array();
 				foreach($one_depth_categories as $one_depth_category) {
 					foreach($one_depth_category->list->category as $two_depth_category) {
-						$daumview_categories[] = 
+						$daumview_categories[$two_depth_category->id->body] = 
 							array( 
 							 'id' => $two_depth_category->id->body,
 							 'name' => $two_depth_category->name->body,

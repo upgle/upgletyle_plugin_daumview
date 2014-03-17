@@ -8,9 +8,7 @@
 
         var $add_triggers = array(
             array('upgletyle.ToolPostManageWrite', 'upgletyle_plugin_daumview', 'controller', 'triggerToolPostManageWrite', 'metabox'),
-
 			array('upgletyle.publishObject.publish', 'upgletyle_plugin_daumview', 'controller', 'triggerPublishObjectPublish', 'before'),
-
 			array('upgletyle.procUpgletylePostsave', 'upgletyle_plugin_daumview', 'controller', 'triggerProcUpgletylePostsave', 'before'),
         );
 

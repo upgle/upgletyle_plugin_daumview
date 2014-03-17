@@ -6,5 +6,8 @@
         <action name="triggerToolPostManageWrite" type="controller" />
         <action name="triggerPublishObjectPublish" type="controller" />
         <action name="triggerProcUpgletylePostsave" type="controller" />
+
+        <action name="procUpgletyle_plugin_daumviewUpdateConfig" type="controller" standalone="true" />
+        <action name="syncDaumviewCategories" type="controller" />
     </actions>
 </module>

@@ -11,5 +11,6 @@
 			<option loop="$daumview_categories => $key, $val" value='{$val['id']}' selected="selected"|cond="$daumview_info->category_id == $val['id']">{$val['full_name']}</option>
 		</select>
 		<span class="help-block">카테고리를 선택하시면 발행과 함께 글을 송고합니다.</span>
+		<block cond="$daumview_info->message">Error : {$daumview_info->message}</block>
 	</div>
 </div>
