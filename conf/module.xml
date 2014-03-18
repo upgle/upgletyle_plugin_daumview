@@ -9,5 +9,6 @@
 
         <action name="procUpgletyle_plugin_daumviewUpdateConfig" type="controller" standalone="true" />
         <action name="syncDaumviewCategories" type="controller" />
+        <action name="syncDaumview" type="controller" />
     </actions>
 </module>

@@ -54,7 +54,7 @@
 			$oDaumviewModel = getModel('upgletyle_plugin_daumview');
 
 			//If it is not joined, return.
-			if(!$oDaumviewModel->isJoined()) return;
+			//if(!$oDaumviewModel->isJoined()) return;
 
 			//Get a saved daumview info
 			if($document_srl) {
@@ -86,10 +86,8 @@
          **/
 		function triggerProcUpgletylePostsave($obj) {
 
-			//카테고리를 선택하지 않았다면 리턴
 			if(!$obj->plugin_daumview) return;
 
-			//DB가 있는지 확인
 			$output = $this->getDaumviewLog($obj->document_srl);
 			if(!$output->toBool()) return;
 
@@ -128,6 +126,41 @@
 				$this->sendDaumview($oDocument,$output->data->category_id);
 			}
 		}
+
+
+		function syncDaumview() {
+
+			$document_srl = Context::get('doc_srl');
+
+			//$oDocumentModel = getModel('document');
+			//$output = $oDocumentModel->getDocument($document_srl);
+			//debugPrint($output);
+
+			$url = getFullUrl('','document_srl',$document_srl);
+			$oDaumviewModel = getModel('upgletyle_plugin_daumview');
+			$data = $oDaumviewModel->getDaumviewByPermalink($url);
+
+			//If remote server data is deleted
+			if(!$data->category_id || !$data->id)
+				$this->deleteDaumviewLog($document_srl);
+			else
+			{
+				$output = $this->getDaumviewLog($document_srl);
+				if(!$output->toBool()) return;
+
+				if($output->data->daumview_id != $data->id || $output->data->category_id != $data->category_id)
+				{
+					$args = new stdClass();
+					$args->document_srl = $document_srl;
+					$args->daumview_id = $data->id;
+					$args->category_id = $data->category_id;
+					$args->status = 'PUBLISHED';
+					$this->updateDaumviewLog($args);
+				}
+			}
+			$this->setMessage('다음서버와 동기화되었습니다.변동사항은 새로고침 후 적용됩니다.');
+		}
+
 
 		function syncDaumviewCategories() {
 
